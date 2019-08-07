@@ -48,14 +48,25 @@ export class NewNoteComponent implements OnInit {
   async save() {
     const userId = this.user.uid;
     const note = this.formNote.value;
-    if (this.note) {
-      await this.noteSrv.update(userId, this.note.id, note);
-      this.snackBar.open("Nota actualizada", "Cerrar", { duration: 4000 });
-    } else {
-      await this.noteSrv.save(userId, note);
-      this.snackBar.open("Nota guardada", "Cerrar", { duration: 4000 });
+    try {
+      if (this.note) {
+        await this.noteSrv.update(userId, this.note.id, note);
+        this.snackBar.open("Nota actualizada", "Cerrar", { duration: 4000 });
+      } else {
+        await this.noteSrv.save(userId, note);
+        this.snackBar.open("Nota guardada", "Cerrar", { duration: 4000 });
+      }
+      this.router.navigate(['notes']);
+    } catch (ex) {
+      let message = null;
+      if (this.note) {
+        message = "Ocurrio un error al actualizar la nota";
+      } else {
+        message = "Ocurrio un error al guardar la nota";
+      }
+      this.snackBar.open(message, "Cerrar", { duration: 4000 });
     }
-    this.router.navigate(['notes']);
+    
   }
 
 }

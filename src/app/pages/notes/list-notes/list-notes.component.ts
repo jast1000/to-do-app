@@ -28,7 +28,11 @@ export class ListNotesComponent implements OnInit {
   }
 
   private async getNotes() {
-    this.notes = await this.notesSrv.getAll(this.user.uid);
+    try {
+      this.notes = await this.notesSrv.getAll(this.user.uid);
+    } catch (ex) {
+      this.snackBar.open("Ocurrio un error al listar las notas", "Cerrar", { duration: 4000 }); 
+    }
   } 
 
   delete(noteId: number) {
@@ -37,9 +41,13 @@ export class ListNotesComponent implements OnInit {
     const dialog = this.matDialog.open(DeleteDialogComponent, config);
     dialog.afterClosed().subscribe(async result => {
       if (!result) return;
-      await this.notesSrv.delete(userId, noteId);
-      await this.getNotes();
+      try {
+        await this.notesSrv.delete(userId, noteId);
+        await this.getNotes();
       this.snackBar.open("Nota eliminada", "Cerrar", { duration: 4000 });
+      } catch (ex) {
+        this.snackBar.open("Ocurrio un error al eliminar la nota", "Cerrar", { duration: 4000 });
+      }
     });
   }
 
