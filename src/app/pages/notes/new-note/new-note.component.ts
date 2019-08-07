@@ -46,7 +46,11 @@ export class NewNoteComponent implements OnInit {
   async save() {
     const userId = this.user.uid;
     const note = this.formNote.value;
-    await this.noteSrv.save(userId, note);
+    if (this.note) {
+      await this.noteSrv.update(userId, this.note.id, note);
+    } else {
+      await this.noteSrv.save(userId, note);  
+    }
     this.router.navigate(['notes']);
   }
 
