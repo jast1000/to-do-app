@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotesService } from 'src/app/services/notes.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @Component({
@@ -17,7 +17,8 @@ export class ListNotesComponent implements OnInit {
   constructor(
     private notesSrv: NotesService,
     private authSrv: AuthenticationService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { 
     this.user = this.authSrv.getUser();
   }
@@ -38,6 +39,7 @@ export class ListNotesComponent implements OnInit {
       if (!result) return;
       await this.notesSrv.delete(userId, noteId);
       await this.getNotes();
+      this.snackBar.open("Nota eliminada", "Cerrar", { duration: 4000 });
     });
   }
 

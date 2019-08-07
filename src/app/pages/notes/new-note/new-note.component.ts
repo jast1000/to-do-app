@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotesService } from 'src/app/services/notes.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-new-note',
@@ -20,7 +21,8 @@ export class NewNoteComponent implements OnInit {
     private noteSrv: NotesService,
     private authSrv: AuthenticationService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {
     this.user = this.authSrv.getUser();
     this.formNote = this.fb.group({
@@ -48,8 +50,10 @@ export class NewNoteComponent implements OnInit {
     const note = this.formNote.value;
     if (this.note) {
       await this.noteSrv.update(userId, this.note.id, note);
+      this.snackBar.open("Nota actualizada", "Cerrar", { duration: 4000 });
     } else {
-      await this.noteSrv.save(userId, note);  
+      await this.noteSrv.save(userId, note);
+      this.snackBar.open("Nota guardada", "Cerrar", { duration: 4000 });
     }
     this.router.navigate(['notes']);
   }
