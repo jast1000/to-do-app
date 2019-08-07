@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   
-  label: string = "No me des click";
-  personajes: any[] = [
-    { titulo: "Benito Juarez", descripcion: "Blabla..."},
-    { titulo: "Miguel Hidalgo", descripcion: "Blabla..."},
-    { titulo: "Juan Gabriel", descripcion: "asdasd"}
-  ];
+  constructor(
+    private authSrv: AuthenticationService
+  ) {  }
 
-  darClick() {
-    this.label = "Ya me diste click!!!";
+  logout() {
+    this.authSrv.logout();
   }
 
 }

@@ -30,6 +30,10 @@ export class AuthenticationService {
     .then(response => console.log(response));
   }
 
+  logout() {
+    this.firebaseAuth.auth.signOut();
+  }
+
   getUser() {
     return this.currentUser;
   }

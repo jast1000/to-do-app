@@ -4,7 +4,9 @@
     <span class="toolbar-button-spacer"></span>
 
     <button mat-icon-button 
-            class="toolbar-icon-button">
+            class="toolbar-icon-button"
+            *ngIf="authSrv.isAuthenticated()"
+            (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
     </button>
 </mat-toolbar>
