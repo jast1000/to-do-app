@@ -5,7 +5,8 @@ import { NewNoteComponent } from './new-note/new-note.component';
 
 const routes: Routes = [
   { path: '', component: ListNotesComponent },
-  { path: 'new-note', component: NewNoteComponent }
+  { path: 'new-note', component: NewNoteComponent },
+  { path: 'edit-note/:noteId', component: NewNoteComponent }
 ];
 
 @NgModule({
