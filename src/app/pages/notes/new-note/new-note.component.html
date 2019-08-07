@@ -1,0 +1,24 @@
+<form [formGroup]="formNote" class="note-form" (ngSubmit)="save()">
+
+    <div class="note-container-inputs">
+
+       <mat-form-field [floatLabel]="false">
+            <mat-label>Título</mat-label>
+            <input matInput placeholder="Título" formControlName="title" />
+            <mat-error>El titulo es requerido</mat-error>
+        </mat-form-field> 
+
+        <mat-form-field [floatLabel]="false">
+            <mat-label>Contenido</mat-label>
+            <input matInput placeholder="Contenido" formControlName="content" />
+            <mat-error>El contenido es requerido</mat-error>
+        </mat-form-field> 
+
+    </div>
+
+    <div class="note-container-buttons">
+        <button mat-raised-button class="note-form-button" routerLink="/notes" >Cancelar</button>
+        <button type="submit" mat-raised-button class="note-form-button">Guardar</button>
+    </div> 
+
+</form>

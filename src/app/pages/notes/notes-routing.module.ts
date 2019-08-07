@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListNotesComponent } from './list-notes/list-notes.component';
-import { FirebaseAuthGuard } from '../../guards/firebase-auth.guard';
+import { NewNoteComponent } from './new-note/new-note.component';
 
 const routes: Routes = [
-  { path: '', component: ListNotesComponent, canActivate: [FirebaseAuthGuard] }
+  { path: '', component: ListNotesComponent },
+  { path: 'new-note', component: NewNoteComponent }
 ];
 
 @NgModule({
