@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotesService } from 'src/app/services/notes.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MatDialog } from '@angular/material';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-list-notes',
@@ -14,9 +16,10 @@ export class ListNotesComponent implements OnInit {
 
   constructor(
     private notesSrv: NotesService,
-    private authSrv: AuthenticationService
+    private authSrv: AuthenticationService,
+    private matDialog: MatDialog
   ) { 
-    this.user = authSrv.getUser();
+    this.user = this.authSrv.getUser();
   }
 
   ngOnInit() {
@@ -25,7 +28,18 @@ export class ListNotesComponent implements OnInit {
 
   private async getNotes() {
     this.notes = await this.notesSrv.getAll(this.user.uid);
-    console.log(this.notes);
   } 
+
+  delete(noteId: number) {
+    const userId = this.user.uid;
+    const config = { width: "250px" };
+    const dialog = this.matDialog.open(DeleteDialogComponent, config);
+    dialog.afterClosed().subscribe(async result => {
+      if (!result) return;
+      await this.notesSrv.delete(userId, noteId);
+      await this.getNotes();
+    });
+  }
+
 
 }
